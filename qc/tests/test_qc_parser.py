@@ -24,3 +24,22 @@ def test_parse_check_functions():
     assert parsed_content
     assert 1 == len(parsed_content.functions)
     assert "main" == parsed_content.functions[0].name
+
+def test_parse_check_functions_calling_malloc():
+    code = """
+        int main (int argc, char *argv[]) {
+            char *space;
+            space = malloc(sizeof(char) * 10);
+            if (space == NULL) {
+                return -1;
+            }
+            return 0;
+        }
+    """
+    parsed_content = parse(code, "<string>")
+    assert parsed_content
+    assert 1 == len(parsed_content.functions)
+    assert "main" == parsed_content.functions[0].name
+    assert "main" == [function.name for function
+                                    in parsed_content.functions
+                                    if function.it_calls("mallor")][0]
