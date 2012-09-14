@@ -42,4 +42,4 @@ def test_parse_check_functions_calling_malloc():
     assert "main" == parsed_content.functions[0].name
     assert "main" == [function.name for function
                                     in parsed_content.functions
-                                    if function.it_calls("mallor")][0]
+                                    if function.it_calls("malloc")][0]

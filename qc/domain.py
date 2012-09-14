@@ -13,7 +13,8 @@ class Function(object):
                          if (isinstance(call, c_ast.FuncCall) and
                             call.name.name == inner_function_name) or
                             (isinstance(call, c_ast.Assignment) and
-                             isinstance(call.rvalue, c_ast.FuncCall))])
+                             isinstance(call.rvalue, c_ast.FuncCall) and
+                             call.rvalue.name.name == inner_function_name)])
 
     def __str__(self):
         return str(self.node)
