@@ -15,6 +15,45 @@ data = analyze("tests/test_file1.c")
 [func.name for func in data.functions if func.it_calls("read")]
 ```
 
+Get max if nest level:
+
+```python
+from qc.parser import analyze
+code = """
+    int main (int argc, char *argv[]) {
+        char *space;
+        space = malloc(sizeof(char) * 10);
+        if (space == NULL) {
+            if (1 > 2) {
+                if (3 == 4) {
+                    return -1;
+                }
+            } else {
+                if (1 == 1) {
+                    return -1;
+                } else {
+                    if (1 == 2) {
+                        return -1;
+                    } else {
+                        if (1 == 2) {
+                            return -1;
+                        } else {
+                            return -1;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+        return 0;
+    }
+"""
+
+parsed_content = parse(code, "<string>")
+main = parsed_content.functions[0]
+assert 5 == main.if_nest_level()
+```
+
 ## Testing
 
 ```sh
