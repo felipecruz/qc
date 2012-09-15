@@ -18,7 +18,7 @@ data = analyze("tests/test_file1.c")
 Get max if nest level:
 
 ```python
-from qc.parser import analyze
+from qc.parser import parse
 code = """
     int main (int argc, char *argv[]) {
         char *space;
